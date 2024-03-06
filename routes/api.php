@@ -19,12 +19,11 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('customers', [\App\Http\Controllers\CustomerController::class, 'index'])->name('customers');
 
 Route::middleware(['auth'])->group(function () {
     Route::post('NewCustomer', [\App\Http\Controllers\CustomerController::class, 'store'])->name('NewCustomer');
     Route::get('customer/{customerId}/ledger', [\App\Http\Controllers\CustomerController::class, 'ledger']);
-
+    Route::get('customers', [\App\Http\Controllers\CustomerController::class, 'index'])->name('customers');
     Route::get('Product',[\App\Http\Controllers\ProductController::class,'index']);
     Route::post('AddProduct',[\App\Http\Controllers\ProductController::class,'Create']);
     Route::get('ProductCat',[\App\Http\Controllers\ProductCat::class,'index'])->name('ProductCat');
