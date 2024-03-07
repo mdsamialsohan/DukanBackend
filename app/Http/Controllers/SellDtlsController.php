@@ -169,4 +169,24 @@ class SellDtlsController extends Controller
 
         return response()->json($sellMemo);
     }
+    public function TotalBillByDate($date)
+    {
+        // Filter SellMemo records for a specific date
+        $sellMemos = SellMemo::whereDate('Date', $date)->get();
+
+        // Calculate the total of TotalBill for the filtered records
+        $totalBill = $sellMemos->sum('TotalBill');
+
+        return response()->json(['total_bill' => $totalBill]);
+    }
+    public function TotalPayByDate($date)
+    {
+        // Filter SellMemo records for a specific date
+        $sellMemos = SellMemo::whereDate('Date', $date)->get();
+
+        // Calculate the total of TotalBill for the filtered records
+        $Paid = $sellMemos->sum('Paid');
+
+        return response()->json(['Paid' => $Paid]);
+    }
 }

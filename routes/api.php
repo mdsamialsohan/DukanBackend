@@ -24,7 +24,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('NewCustomer', [\App\Http\Controllers\CustomerController::class, 'store'])->name('NewCustomer');
     Route::get('customer/{customerId}/ledger', [\App\Http\Controllers\CustomerController::class, 'ledger']);
     Route::get('customers', [\App\Http\Controllers\CustomerController::class, 'index'])->name('customers');
+    Route::get('TotalDue', [\App\Http\Controllers\CustomerController::class, 'TotalDue']);
     Route::get('Product',[\App\Http\Controllers\ProductController::class,'index']);
+    Route::get('ProductValue',[\App\Http\Controllers\ProductController::class,'ProductValue']);
     Route::post('AddProduct',[\App\Http\Controllers\ProductController::class,'Create']);
     Route::get('ProductCat',[\App\Http\Controllers\ProductCat::class,'index'])->name('ProductCat');
     Route::post('AddProductCat',[\App\Http\Controllers\ProductCat::class,'Create'])->name('AddProductCat');
@@ -35,6 +37,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('VendorList',[\App\Http\Controllers\VendorController::class,'index']);
     Route::post('NewVendor',[\App\Http\Controllers\VendorController::class,'Create']);
+    Route::get('TotalDebt', [\App\Http\Controllers\VendorController::class, 'TotalDebt']);
 
     Route::get('PurchaseExpList',[\App\Http\Controllers\PurchaseExpenseListController::class,'index']);
     Route::post('AddPurchaseExpList',[\App\Http\Controllers\PurchaseExpenseListController::class,'Create']);
@@ -45,6 +48,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('sell',[\App\Http\Controllers\SellDtlsController::class,'store']);
     Route::post('DuePay',[\App\Http\Controllers\SellDtlsController::class,'Due']);
     Route::get('sellMemoDetails/{sellMemoID}',[\App\Http\Controllers\SellDtlsController::class,'getSellMemoDetails']);
+    Route::get('TotalBillByDate/{date}',[\App\Http\Controllers\SellDtlsController::class,'TotalBillByDate']);
+    Route::get('TotalPayByDate/{date}',[\App\Http\Controllers\SellDtlsController::class,'TotalPayByDate']);
 
     Route::get('Account',[\App\Http\Controllers\AccountController::class,'index']);
     Route::post('NewAccount',[\App\Http\Controllers\AccountController::class,'store']);

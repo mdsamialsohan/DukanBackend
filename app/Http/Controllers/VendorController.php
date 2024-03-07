@@ -13,6 +13,14 @@ class VendorController extends Controller
         $vendor = VendorList::all();// Fetch data from the CustomerList model
         return response()->json($vendor);
     }
+    public function TotalDebt()
+    {
+        $vendor = VendorList::all();
+
+        $Debt = $vendor->sum('Debt');
+
+        return response()->json(['Debt' => $Debt]);
+    }
     public function Create(Request $request)
     {
         $validatedData = $request->validate([

@@ -27,6 +27,14 @@ class CustomerController extends Controller
 
         return response()->json(['message' => 'Customer added successfully', 'customer' => $customer]);
     }
+    public function TotalDue()
+    {
+        $customers = CustomerList::all();
+
+        $due = $customers->sum('due');
+
+        return response()->json(['due' => $due]);
+    }
     public function ledger($customerId)
     {
         $sellMemos = SellMemo::where('c_id', $customerId)->with('sellDtls')->get();

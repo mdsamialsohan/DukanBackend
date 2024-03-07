@@ -13,6 +13,14 @@ class ProductController extends Controller
         $Product = Product::all();// Fetch data from the CustomerList model
         return response()->json($Product);
     }
+    public function ProductValue()
+    {
+        $Product = Product::all();// Fetch data from the CustomerList model
+        $totalPrice = $Product->sum(function ($product) {
+            return $product->ProductUnit * $product->Rate;
+        });
+        return response()->json(['TotalPrice' =>$totalPrice]);
+    }
     public function Create(Request $request)
     {
         $validatedData = $request->validate([
