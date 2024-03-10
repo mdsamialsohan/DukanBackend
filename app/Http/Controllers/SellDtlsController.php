@@ -189,4 +189,17 @@ class SellDtlsController extends Controller
 
         return response()->json(['Paid' => $Paid]);
     }
+    public function soldProductsByDate($Date)
+    {
+        $soldProducts = SellDtls::whereHas('sellMemo', function ($query) use ($Date) {
+            $query->where('Date', $Date);
+        })
+            ->with(['product.brand', 'product.category', 'product.unit'])
+            ->select('ProductID', DB::raw('SUM(Quantity) as totalQuantity'))
+            ->groupBy('ProductID')
+            ->get();
+
+        return response()->json(['soldProducts' => $soldProducts]);
+    }
+
 }
