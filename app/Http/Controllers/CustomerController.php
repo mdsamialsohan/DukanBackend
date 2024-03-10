@@ -40,4 +40,33 @@ class CustomerController extends Controller
         $sellMemos = SellMemo::where('c_id', $customerId)->with('sellDtls')->get();
         return response()->json(['sellMemos' => $sellMemos]);
     }
+    public function CustomerById($customerId)
+    {
+        try {
+            $customer = CustomerList::findOrFail($customerId);
+            return response()->json(['customer' => $customer]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Customer not found'], 404);
+        }
+    }
+    public function UpdateCustomer(Request $request, $customerId)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string',
+            'mobile' => 'nullable|string',
+            'address' => 'required|string',
+            'due'=> 'required|string',
+            'national_id' => 'nullable|string',
+        ]);
+
+        try {
+            $customer = CustomerList::findOrFail($customerId);
+
+            $customer->update($validatedData);
+
+            return response()->json(['message' => 'Customer updated successfully', 'customer' => $customer]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Customer not found'], 404);
+        }
+    }
 }

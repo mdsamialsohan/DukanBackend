@@ -161,13 +161,14 @@ class SellDtlsController extends Controller
     public function getSellMemoDetails($sellMemoID)
     {
         // Fetch detailed information about the Sell Memo with SellDtls
-        $sellMemo = SellMemo::with(['sellDtls.product','sellDtls.product.brand', 'sellDtls.product.category', 'sellDtls.product.unit'])->find($sellMemoID);
+        $sellMemo = SellMemo::with(['customer', 'sellDtls', 'sellDtls.product','sellDtls.product.brand', 'sellDtls.product.category', 'sellDtls.product.unit'])
+            ->find($sellMemoID);
 
         if (!$sellMemo) {
             return response()->json(['error' => 'Sell Memo not found'], 404);
         }
 
-        return response()->json($sellMemo);
+        return response()->json(['sellMemo' => $sellMemo]);
     }
     public function TotalBillByDate($date)
     {
@@ -189,4 +190,17 @@ class SellDtlsController extends Controller
 
         return response()->json(['Paid' => $Paid]);
     }
+    public function soldProductsByDate($Date)
+    {
+        $soldProducts = SellDtls::whereHas('sellMemo', function ($query) use ($Date) {
+            $query->where('Date', $Date);
+        })
+            ->with(['product.brand', 'product.category', 'product.unit'])
+            ->select('ProductID', DB::raw('SUM(Quantity) as totalQuantity'))
+            ->groupBy('ProductID')
+            ->get();
+
+        return response()->json(['soldProducts' => $soldProducts]);
+    }
+
 }
