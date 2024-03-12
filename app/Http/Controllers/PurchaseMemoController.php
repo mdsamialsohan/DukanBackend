@@ -97,7 +97,7 @@ class PurchaseMemoController extends Controller
         $request->validate([
             'Date' => 'required|date',
             'VendorID' => 'required|exists:vendor,VendorID',
-            'Pay' =>'required|numeric|min:0',
+            'Pay' =>'required|numeric',
         ]);
 
         try {
