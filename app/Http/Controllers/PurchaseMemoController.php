@@ -132,4 +132,40 @@ class PurchaseMemoController extends Controller
             return response()->json(['error' => 'Failed to add debt'], 500);
         }
     }
+    public function getPurMemoDetails($PurchaseMemoID)
+    {
+        $purMemo = PurchaseMemo::with(['Vendor', 'purchaseDtls', 'purchaseDtls.product','purchaseDtls.product.brand', 'purchaseDtls.product.category', 'purchaseDtls.product.unit'])
+            ->find($PurchaseMemoID);
+
+        if (!$purMemo) {
+            return response()->json(['error' => 'purchase Memo not found'], 404);
+        }
+
+        return response()->json(['purMemo' => $purMemo]);
+    }
+    public function getPurMemo($Date)
+    {
+        $purMemo = PurchaseMemo::with(['Vendor', 'purchaseDtls', 'purchaseDtls.product','purchaseDtls.product.brand', 'purchaseDtls.product.category', 'purchaseDtls.product.unit'])
+            ->whereDate('Date', $Date)
+            ->get();
+
+        if (!$purMemo) {
+            return response()->json(['error' => 'Purchase Memo not found'], 404);
+        }
+
+        return response()->json(['purMemo' => $purMemo]);
+    }
+    public function getPurPaid($Date)
+    {
+        $purMemo = PurchaseMemo::with(['Vendor'])
+            ->whereDate('Date', $Date)
+            ->where('Paid', '>', 0)
+            ->get();
+
+        if (!$purMemo) {
+            return response()->json(['error' => 'Purchase Memo not found'], 404);
+        }
+
+        return response()->json(['purMemo' => $purMemo]);
+    }
 }

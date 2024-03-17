@@ -170,6 +170,31 @@ class SellDtlsController extends Controller
 
         return response()->json(['sellMemo' => $sellMemo]);
     }
+    public function getSellMemo($Date)
+    {
+        $sellMemo = SellMemo::with(['customer', 'sellDtls', 'sellDtls.product','sellDtls.product.brand', 'sellDtls.product.category', 'sellDtls.product.unit'])
+            ->whereDate('Date', $Date)
+            ->get();
+
+        if (!$sellMemo) {
+            return response()->json(['error' => 'Sell Memo not found'], 404);
+        }
+
+        return response()->json(['sellMemo' => $sellMemo]);
+    }
+    public function getSellPaid($Date)
+    {
+        $sellMemo = SellMemo::with(['customer'])
+            ->whereDate('Date', $Date)
+            ->where('Paid', '>', 0)
+            ->get();
+
+        if (!$sellMemo) {
+            return response()->json(['error' => 'Sell Memo not found'], 404);
+        }
+
+        return response()->json(['sellMemo' => $sellMemo]);
+    }
     public function TotalBillByDate($date)
     {
         // Filter SellMemo records for a specific date

@@ -55,12 +55,13 @@ class ExpenseController extends Controller
     public function TotalExpByDate($date)
     {
         // Filter SellMemo records for a specific date
-        $sellMemos = ExpenseList::whereDate('Date', $date)->get();
+        $Exp = ExpenseList::with('Exp')
+            ->whereDate('Date', $date)->get();
 
         // Calculate the total of TotalBill for the filtered records
-        $totalBill = $sellMemos->sum('Amount');
+        $totalBill = $Exp->sum('Amount');
 
-        return response()->json(['total_exp' => $totalBill]);
+        return response()->json(['total_exp' => $totalBill,'exp' =>$Exp]);
     }
 
 }

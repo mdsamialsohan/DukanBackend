@@ -21,4 +21,8 @@ class VendorList extends Model
         'profit',
         'discount'
     ];
+    public function purchaseMemos()
+    {
+        return $this->hasMany(PurchaseMemo::class, 'VendorID', 'VendorID');
+    }
 }

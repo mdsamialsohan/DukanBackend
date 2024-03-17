@@ -40,19 +40,26 @@ Route::middleware(['auth'])->group(function () {
     Route::get('VendorList',[\App\Http\Controllers\VendorController::class,'index']);
     Route::post('NewVendor',[\App\Http\Controllers\VendorController::class,'Create']);
     Route::get('TotalDebt', [\App\Http\Controllers\VendorController::class, 'TotalDebt']);
+    Route::put('UpdateVendor/{vendorId}', [\App\Http\Controllers\VendorController::class, 'UpdateVendor']);
+    Route::get('vendor/{vendorId}/ledger', [\App\Http\Controllers\VendorController::class, 'ledger']);
+    Route::get('vendor/{vendorId}', [\App\Http\Controllers\VendorController::class, 'VendorById']);
 
     Route::get('PurchaseExpList',[\App\Http\Controllers\PurchaseExpenseListController::class,'index']);
     Route::post('AddPurchaseExpList',[\App\Http\Controllers\PurchaseExpenseListController::class,'Create']);
 
     Route::post('Purchase',[\App\Http\Controllers\PurchaseMemoController::class,'store']);
-
     Route::post('DebtPay',[\App\Http\Controllers\PurchaseMemoController::class,'Debt']);
+    Route::get('PurchaseMemoDetails/{PurchaseMemoID}',[\App\Http\Controllers\PurchaseMemoController::class,'getPurMemoDetails']);
+    Route::get('GetPurMemo/{Date}',[\App\Http\Controllers\PurchaseMemoController::class,'getPurMemo']);
+    Route::get('GetPurPaid/{Date}',[\App\Http\Controllers\PurchaseMemoController::class,'getPurPaid']);
 
     Route::post('sell',[\App\Http\Controllers\SellDtlsController::class,'store']);
     Route::post('DuePay',[\App\Http\Controllers\SellDtlsController::class,'Due']);
     Route::get('TotalBillByDate/{date}',[\App\Http\Controllers\SellDtlsController::class,'TotalBillByDate']);
     Route::get('TotalPayByDate/{date}',[\App\Http\Controllers\SellDtlsController::class,'TotalPayByDate']);
     Route::get('SoldProduct/{Date}',[\App\Http\Controllers\SellDtlsController::class,'soldProductsByDate']);
+    Route::get('GetMemo/{Date}',[\App\Http\Controllers\SellDtlsController::class,'getSellMemo']);
+    Route::get('GetMemoPaid/{Date}',[\App\Http\Controllers\SellDtlsController::class,'getSellPaid']);
     Route::get('sellMemoDetails/{sellMemoID}',[\App\Http\Controllers\SellDtlsController::class,'getSellMemoDetails']);
 
     Route::get('Account',[\App\Http\Controllers\AccountController::class,'index']);
@@ -65,6 +72,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('ExpView',[\App\Http\Controllers\ExpenseController::class,'ExpListIndex']);
     Route::post('AddExp',[\App\Http\Controllers\ExpenseController::class,'ExpListStore']);
     Route::get('TotalExpByDate/{date}',[\App\Http\Controllers\ExpenseController::class,'TotalExpByDate']);
+    Route::get('BalanceSheet',[\App\Http\Controllers\BalanceSheetController::class,'index']);
 });
 
 

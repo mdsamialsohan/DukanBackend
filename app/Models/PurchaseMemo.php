@@ -22,4 +22,8 @@ class PurchaseMemo extends Model
     {
         return $this->hasMany(PurchaseDtls::class, 'PurMemoID');
     }
+    public function Vendor()
+    {
+        return $this->belongsTo(VendorList::class, 'VendorID', 'VendorID');
+    }
 }
