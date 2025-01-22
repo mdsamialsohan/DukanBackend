@@ -99,7 +99,7 @@ class SellDtlsController extends Controller
         $request->validate([
             'Date' => 'required|date',
             'c_id' => 'required|exists:customer_list,c_id',
-            'Pay' => 'required|numeric|min:0',
+            'Pay' => 'required|numeric',
         ]);
 
         try {
@@ -226,6 +226,13 @@ class SellDtlsController extends Controller
             ->get();
 
         return response()->json(['soldProducts' => $soldProducts]);
+    }
+    public function SoldProductAPI()
+    {
+        $soldProducts = SellDtls::all()
+            ->with(['sellMemo.Date','product.brand.BrandName', 'product.category.ProductCat', 'product.unit.UnitName','Quantity'])
+            ->get();
+        return response()->json(['soldProduct' => $soldProducts]);
     }
 
 }
