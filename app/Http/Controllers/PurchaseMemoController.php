@@ -159,7 +159,7 @@ class PurchaseMemoController extends Controller
     {
         $purMemo = PurchaseMemo::with(['Vendor'])
             ->whereDate('Date', $Date)
-            ->where('Paid', '>', 0)
+            ->where('Paid', '!=', 0)
             ->get();
 
         if (!$purMemo) {

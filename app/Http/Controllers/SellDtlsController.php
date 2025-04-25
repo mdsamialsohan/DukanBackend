@@ -174,6 +174,7 @@ class SellDtlsController extends Controller
     {
         $sellMemo = SellMemo::with(['customer', 'sellDtls', 'sellDtls.product','sellDtls.product.brand', 'sellDtls.product.category', 'sellDtls.product.unit'])
             ->whereDate('Date', $Date)
+            ->where('Paid', '=', 0)
             ->get();
 
         if (!$sellMemo) {
@@ -186,7 +187,7 @@ class SellDtlsController extends Controller
     {
         $sellMemo = SellMemo::with(['customer'])
             ->whereDate('Date', $Date)
-            ->where('Paid', '>', 0)
+            ->where('Paid', '!=', 0)
             ->get();
 
         if (!$sellMemo) {
