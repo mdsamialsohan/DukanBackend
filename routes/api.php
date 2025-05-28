@@ -28,6 +28,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('customers', [\App\Http\Controllers\CustomerController::class, 'index'])->name('customers');
     Route::get('TotalDue', [\App\Http\Controllers\CustomerController::class, 'TotalDue']);
     Route::get('Product',[\App\Http\Controllers\ProductController::class,'index']);
+    Route::get('AllProduct',[\App\Http\Controllers\ProductController::class,'AllProduct']);
+
     Route::get('ProductValue',[\App\Http\Controllers\ProductController::class,'ProductValue']);
     Route::post('AddProduct',[\App\Http\Controllers\ProductController::class,'Create']);
     Route::get('ProductCat',[\App\Http\Controllers\ProductCat::class,'index'])->name('ProductCat');

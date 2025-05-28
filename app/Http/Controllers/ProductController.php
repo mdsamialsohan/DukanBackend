@@ -13,6 +13,11 @@ class ProductController extends Controller
         $Product = Product::where('ProductUnit', '>', 0)->get();
         return response()->json($Product);
     }
+    public function AllProduct()
+    {
+        $Product = Product::all();
+        return response()->json($Product);
+    }
     public function ProductValue()
     {
         $Product = Product::all();// Fetch data from the CustomerList model
