@@ -21,7 +21,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('SoldProductAPI',[\App\Http\Controllers\SellDtlsController::class,'SoldProductAPI']);
+    Route::get('SoldroductAPI',[\App\Http\Controllers\SellDtlsController::class,'SoldProductAPI']);
     Route::post('NewCustomer', [\App\Http\Controllers\CustomerController::class, 'store'])->name('NewCustomer');
     Route::put('UpdateCustomer/{customerId}', [\App\Http\Controllers\CustomerController::class, 'UpdateCustomer']);
     Route::get('customer/{customerId}/ledger', [\App\Http\Controllers\CustomerController::class, 'ledger']);
