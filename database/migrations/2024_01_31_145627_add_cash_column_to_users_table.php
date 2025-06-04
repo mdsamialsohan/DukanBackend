@@ -11,9 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->decimal('Cash', 10, 2)->default(0);
-        });
+        if(!Schema::hasColumn('users','cash'))
+        {
+            Schema::table('users', function (Blueprint $table) {
+                $table->decimal('Cash', 10, 2)->default(0);
+            });
+        }
+
     }
 
     /**
@@ -21,8 +25,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('Cash');
-        });
+        if(Schema::hasColumn('users','cash')) {
+            Schema::table('users', function (Blueprint $table) {
+                $table->dropColumn('Cash');
+            });
+        }
     }
 };
